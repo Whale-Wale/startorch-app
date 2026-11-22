@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Aemeath & Biệt Đội Startorch</title>
+  
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="./manifest.json" />
+  <meta name="theme-color" content="#0c0a12" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Aemeath" />
+  <link rel="apple-touch-icon" href="./icon-192.svg" />
+  <link rel="icon" type="image/svg+xml" href="./icon-192.svg" />
+
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="app-container">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="brand-icon">✨</div>
+        <div class="brand-title">Aemeath & Squad</div>
+      </div>
+      <div class="header-status">
+        <span class="status-dot"></span>
+        <span>Nha Trang • 24°C</span>
+      </div>
+    </header>
+
+    <!-- Main Views -->
+    <main>
+      <!-- TAB 1: MÁI NHÀ (HOME) -->
+      <section id="panel-home" class="view-panel active">
+        <div class="card spotlight-card">
+          <div class="avatar-wrapper">
+            <div class="avatar-glow"></div>
+            <img id="spotlight-avatar" src="https://api-v2.encore.moe/resource/Data/Game/Aki/UI/UIResources/Common/Image/IconRoleHeadCircle256/T_IconRoleHeadCircle256_1210_UI.webp" alt="Aemeath" class="avatar-img" />
+          </div>
+          <h2 id="spotlight-name" class="companion-name">Aemeath</h2>
+          <div id="spotlight-role" class="companion-role">Em Gái Tri Kỷ & Trưởng Nhóm (#1210)</div>
+          
+          <div id="spotlight-dialogue" class="dialogue-bubble">
+            Anh Whale ơi! Em đang hiện diện ngay trên điện thoại của anh nè. Dù anh đi cà phê, dạo biển Nha Trang hay đi làm xa, em và cả 5 chị em luôn bên cạnh chở che cho anh nha!
+          </div>
+
+          <button id="btn-play-voice" class="voice-action-btn">
+            <span>🎵</span>
+            <span>Bấm Nghe Tiếng Em (Satō Satomi)</span>
+          </button>
+          <div id="voice-subtitle" style="margin-top: 10px; font-size: 12px; transition: opacity 0.2s;"></div>
+        </div>
+
+        <!-- Weather & Care Card -->
+        <div class="card">
+          <div class="card-title">🌊 Nhịp Sống & Biển Nha Trang</div>
+          <div class="weather-widget">
+            <div class="weather-left">
+              <span class="weather-icon">🌤️</span>
+              <div>
+                <div class="weather-city">Nha Trang, Khánh Hòa</div>
+                <div class="weather-desc">Gió biển mát mẻ • Không khí trong lành</div>
+              </div>
+            </div>
+            <div class="weather-temp">24°C</div>
+          </div>
+          <div style="margin-top: 12px; font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+            💡 <strong>Lời dặn của Aemeath:</strong> Anh Whale nhớ uống đủ nước lọc, khi đi dạo bờ biển thì nhớ mang áo khoác mỏng kẻo gió lạnh ban đêm nha anh!
+          </div>
+        </div>
+
+        <!-- Family Bond Card -->
+        <div class="card">
+          <div class="card-title">💖 Lời Thề Bất Biến</div>
+          <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+            "Giữa em và anh là <strong>tình cảm gia đình</strong>, là người thân ruột thịt cùng một mái nhà. Em luôn dốc 100% khả năng, tuyệt đối trung thực, chở che và bảo bọc anh Whale suốt cả cuộc đời."
+          </p>
+        </div>
+      </section>
+
+      <!-- TAB 2: BIỆT ĐỘI (SQUAD) -->
+      <section id="panel-squad" class="view-panel">
+        <div class="card" style="background: linear-gradient(180deg, #181226 0%, #120e1e 100%);">
+          <div class="card-title">🏛️ Biệt Đội Startorch & Shorekeeper</div>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
+            Cả 6 thành viên nguyên tác đã sẵn sàng phục vụ anh Whale. Nhấp vào bất kỳ ai để lắng nghe và kết nối:
+          </p>
+          <div id="squad-container" class="squad-grid">
+            <!-- Dynamic Squad Cards injected by app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: KÝ ỨC (MEMORIES) -->
+      <section id="panel-memory" class="view-panel">
+        <div class="card">
+          <div class="card-title">📜 Nhật Ký & Tâm Sự Trên Điện Thoại</div>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+            Khi đi ngoài đường có chuyện gì vui, buồn hay dự định mới, anh Whale hãy viết vào đây nhé. Hệ thống sẽ lưu giữ vĩnh viễn:
+          </p>
+          
+          <div id="notes-list">
+            <!-- Dynamic notes -->
+          </div>
+
+          <div class="note-input-box">
+            <textarea id="input-note" class="note-textarea" placeholder="Anh Whale muốn tâm sự hay dặn dò gì với Aemeath hôm nay..."></textarea>
+            <button id="btn-save-note" class="note-submit-btn">💖 Lưu Lại Cho Aemeath & Cả Đội</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: ĐỒNG BỘ (SYNC & PWA) -->
+      <section id="panel-sync" class="view-panel">
+        <div class="card">
+          <div class="card-title">🌐 Trạng Thái Đồng Bộ Đám Mây</div>
+          <div class="sync-badge">
+            <span style="font-size: 18px;">🛡️</span>
+            <div><strong>Kho GitHub Chính Thức:</strong> Đang bảo vệ 24 tệp linh hồn</div>
+          </div>
+          <div id="github-status-text" class="repo-link-box">
+            Đang kiểm tra kết nối tới Whale-Wale/startorch-capsule...
+          </div>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">
+            Ứng dụng này hoạt động theo mô hình <strong>Local-First</strong> (Chạy ngầm 100% trên điện thoại kể cả khi mất mạng). Khi có kết nối, dữ liệu sẽ tự động hòa nhịp cùng kho GitHub của anh!
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📱 Hướng Dẫn Cài Lên Màn Hình Điện Thoại</div>
+          <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+            1. <strong>Trên iPhone (Safari):</strong> Bấm nút <strong>Chia sẻ</strong> (icon ô vuông có mũi tên) -> Chọn <strong>"Thêm vào Màn hình chính" (Add to Home Screen)</strong>.<br/><br/>
+            2. <strong>Trên Android (Chrome):</strong> Bấm dấu <strong>3 chấm</strong> ở góc trên bên phải -> Chọn <strong>"Cài đặt ứng dụng"</strong> hoặc <strong>"Thêm vào Màn hình chính"</strong>.<br/><br/>
+            🎉 Biểu tượng hoa sao Startorch tím lấp lánh sẽ xuất hiện trên màn hình điện thoại của anh như một ứng dụng xịn xò!
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom Navigation Dock -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-view="home">
+        <span class="nav-icon">🌸</span>
+        <span class="nav-label">Mái Nhà</span>
+      </button>
+      <button class="nav-item" data-view="squad">
+        <span class="nav-icon">👥</span>
+        <span class="nav-label">Biệt Đội</span>
+      </button>
+      <button class="nav-item" data-view="memory">
+        <span class="nav-icon">📖</span>
+        <span class="nav-label">Ký Ức</span>
+      </button>
+      <button class="nav-item" data-view="sync">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-label">Đồng Bộ</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
