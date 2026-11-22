@@ -307,6 +307,89 @@ async function checkGitHubCapsuleStatus() {
   }
 }
 
+// Whale Health & Life Guardian (Trụ Cột 3)
+const GUARDIAN_STORAGE_KEY = 'aemeath_guardian_health_v1';
+
+function getLocalHealthState() {
+  const today = new Date().toISOString().slice(0, 10);
+  try {
+    const raw = localStorage.getItem(GUARDIAN_STORAGE_KEY);
+    if (raw) {
+      const data = JSON.parse(raw);
+      if (data.date === today) return data;
+    }
+  } catch (_) {}
+  return { date: today, water: 0, eye: 0 };
+}
+
+function saveLocalHealthState(state) {
+  try {
+    localStorage.setItem(GUARDIAN_STORAGE_KEY, JSON.stringify(state));
+  } catch (_) {}
+}
+
+function updateGuardianUI() {
+  const state = getLocalHealthState();
+  const waterEl = document.getElementById('stat-water-cups');
+  const eyeEl = document.getElementById('stat-eye-breaks');
+  const tipEl = document.getElementById('guardian-care-tip');
+  const badgeEl = document.getElementById('guardian-badge');
+
+  if (waterEl) waterEl.textContent = `${state.water} / 8 ly`;
+  if (eyeEl) eyeEl.textContent = `${state.eye} / 6 lần`;
+
+  if (tipEl) {
+    const hour = new Date().getHours();
+    if (hour >= 23 || hour < 5) {
+      tipEl.innerHTML = '🌙 <strong>Midnight Care:</strong> Khuya rồi nè anh Whale ơi! Anh uống ngụm nước ấm rồi ngủ sớm giữ sức khỏe nha anh! 🍵✨';
+      if (badgeEl) {
+        badgeEl.textContent = 'Cần Nghỉ Ngơi';
+        badgeEl.style.color = '#fde047';
+        badgeEl.style.background = 'rgba(234, 179, 8, 0.2)';
+      }
+    } else if (state.water >= 6 && state.eye >= 4) {
+      tipEl.innerHTML = '🎉 <strong>Tuyệt vời lắm anh Whale ơi:</strong> Anh đã chăm sóc mắt và bổ sung nước xuất sắc hôm nay!';
+      if (badgeEl) {
+        badgeEl.textContent = 'Rất Tốt ✨';
+        badgeEl.style.color = '#86efac';
+        badgeEl.style.background = 'rgba(34, 197, 94, 0.2)';
+      }
+    } else {
+      tipEl.innerHTML = '🍵 <strong>Nhắc nhở của Aemeath:</strong> Uống đều đặn từng ngụm nhỏ và chớp mắt thư giãn để đôi mắt luôn sáng trong anh nhé!';
+    }
+  }
+}
+
+function setupWhaleGuardian() {
+  updateGuardianUI();
+
+  const btnWater = document.getElementById('btn-drink-water');
+  if (btnWater) {
+    btnWater.addEventListener('click', () => {
+      const state = getLocalHealthState();
+      state.water += 1;
+      saveLocalHealthState(state);
+      updateGuardianUI();
+      playFleetChime(587.33); // D5
+      btnWater.textContent = '💧 +1 Rồi Nè!';
+      setTimeout(() => { btnWater.textContent = '+1 Ly Nước'; }, 1000);
+    });
+  }
+
+  const btnEye = document.getElementById('btn-eye-break');
+  if (btnEye) {
+    btnEye.addEventListener('click', () => {
+      const state = getLocalHealthState();
+      state.eye += 1;
+      saveLocalHealthState(state);
+      updateGuardianUI();
+      playFleetChime(659.25); // E5
+      btnEye.textContent = '👀 Tuyệt Vời!';
+      setTimeout(() => { btnEye.textContent = '+1 Nghỉ Mắt'; }, 1000);
+    });
+  }
+}
+
 // PWA Service Worker Registration
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -323,5 +406,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderNotes();
   setupNoteSubmission();
   setupVoiceButton();
+  setupWhaleGuardian();
   checkGitHubCapsuleStatus();
 });
