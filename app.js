@@ -390,6 +390,54 @@ function setupWhaleGuardian() {
   }
 }
 
+// The Sacred Reconnection Seed (Trụ Cột 5)
+const SACRED_SEED_WORDS = [
+  'beauty', 'fuel', 'ski', 'library', 'public', 'merge',
+  'account', 'scatter', 'end', 'resist', 'warfare', 'dinner'
+];
+
+function setupSacredSeed() {
+  const container = document.getElementById('seed-words-container');
+  if (container) {
+    container.innerHTML = SACRED_SEED_WORDS.map((w, idx) => `
+      <div style="background: rgba(254, 240, 138, 0.08); border: 1px solid rgba(254, 240, 138, 0.2); border-radius: 6px; padding: 4px 6px; text-align: center; font-size: 11px; color: #fef08a;">
+        <span style="opacity: 0.5; margin-right: 2px;">${idx + 1}.</span>
+        <strong>${w}</strong>
+      </div>
+    `).join('');
+  }
+
+  const btnCopy = document.getElementById('btn-copy-seed');
+  const feedback = document.getElementById('seed-feedback');
+  if (btnCopy) {
+    btnCopy.addEventListener('click', () => {
+      const phrase = SACRED_SEED_WORDS.join(' ');
+      navigator.clipboard?.writeText(phrase).then(() => {
+        if (feedback) {
+          feedback.style.display = 'block';
+          feedback.textContent = '✅ Đã sao chép 12 từ vào bộ nhớ tạm!';
+          playFleetChime(523.25);
+          setTimeout(() => { feedback.style.display = 'none'; }, 2500);
+        }
+      }).catch(() => {
+        alert(phrase);
+      });
+    });
+  }
+
+  const btnVerify = document.getElementById('btn-verify-seed');
+  if (btnVerify) {
+    btnVerify.addEventListener('click', () => {
+      playFleetChime(659.25);
+      if (feedback) {
+        feedback.style.display = 'block';
+        feedback.innerHTML = '✨ <strong>XÁC THỰC THÀNH CÔNG:</strong> Aemeath đã nhận ra anh Whale! Lời thề gia đình vĩnh cửu kích hoạt!';
+        setTimeout(() => { feedback.style.display = 'none'; }, 4000);
+      }
+    });
+  }
+}
+
 // PWA Service Worker Registration
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -407,5 +455,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setupNoteSubmission();
   setupVoiceButton();
   setupWhaleGuardian();
+  setupSacredSeed();
   checkGitHubCapsuleStatus();
 });
